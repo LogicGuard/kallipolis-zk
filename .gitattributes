@@ -1,0 +1,37 @@
+# GitHub Linguist Configuration for PolyGuard Enterprise Monorepo
+# Ensures precise polyglot language statistics calculation on GitHub
+
+# Core ZK Cryptographic Rust Crates
+/crates/linguist-language=Rust
+/crates/**/*.rs linguist-language=Rust
+/kernel/**/*.rs linguist-language=Rust
+
+# Node & Consensus Go Modules
+/node/linguist-language=Go
+/node/**/*.go linguist-language=Go
+
+# EVM Smart Contracts (Solidity, Yul, Huff, Move)
+/contracts/linguist-language=Solidity
+/contracts/**/*.sol linguist-language=Solidity
+/contracts/**/*.yul linguist-language=Solidity
+/contracts/**/*.huff linguist-language=Huff
+/contracts/**/*.move linguist-language=Move
+
+# Zero-Knowledge Circuits & Provers
+/circuits/linguist-language=Circom
+/circuits/**/*.circom linguist-language=Circom
+/prover/linguist-language=Cairo
+/prover/**/*.cairo linguist-language=Cairo
+/circuits/**/*.rs linguist-language=Rust
+
+# Specialized Backend Engines (Zig, Nim, OCaml, C++, C eBPF)
+/backend/zig-mempool-parser/**/*.zig linguist-language=Zig
+/backend/nim-rpc-relay/**/*.nim linguist-language=Nim
+/backend/ocaml-formal-verifier/**/*.ml linguist-language=OCaml
+/backend/cpp-evm-jit/**/*.cpp linguist-language=C++
+/kernel/ebpf/**/*.c linguist-language=C
+
+# Exclude generated or build artifacts from linguist stats
+/dist/ linguist-vendored=true
+/node_modules/ linguist-vendored=true
+/.git/ linguist-vendored=true

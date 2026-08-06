@@ -1,0 +1,17 @@
+# PolyGuard Code Owners
+# Global owners
+* @polyguard-core/security-team
+
+# Smart Contracts & Yul/Huff Assembly
+/contracts/ @polyguard-core/smart-contracts
+
+# ZK Provers & Circom/Halo2 Circuits
+/circuits/ @polyguard-core/zk-cryptography
+/prover/ @polyguard-core/zk-cryptography
+
+# Rust & Go Kernels / eBPF
+/kernel/ @polyguard-core/kernel-engineering
+/node/ @polyguard-core/kernel-engineering
+
+# Frontend & UI Dashboard
+/src/ @polyguard-core/frontend-leads

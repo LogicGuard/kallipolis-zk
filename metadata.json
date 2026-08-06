@@ -1,0 +1,8 @@
+{
+  "name": "Kallipolis ZK v3.0",
+  "description": "Autonomous zero-knowledge security, intelligence, and threat prevention platform for Polygon ecosystem smart contracts, network traffic, and compliance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

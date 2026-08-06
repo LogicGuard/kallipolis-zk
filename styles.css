@@ -1,0 +1,73 @@
+
+/* Existing styles... */
+
+.scanline-overlay {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(59, 130, 246, 0.05) 50%
+  );
+  background-size: 100% 4px;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.4; }
+  5% { opacity: 1; }
+  10% { opacity: 0.4; }
+  15% { opacity: 1; }
+  25% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.animate-flicker {
+  animation: flicker 4s infinite linear;
+}
+
+/* Custom Input Styling for Command Bar within Overlay */
+input[type="range"] {
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.05);
+  height: 2px;
+  border-radius: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 10px;
+  width: 4px;
+  background: #3b82f6;
+  cursor: pointer;
+  box-shadow: 0 0 10px #3b82f6;
+}
+
+/* Scrollbar Enhancement for Overlays */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+/* Specific styling for the internal IDE-like tabs */
+.tool-tab-active {
+    background: linear-gradient(to bottom, rgba(59, 130, 246, 0.1), transparent);
+}
+
+/* Simulated CLI blinking cursor */
+.cli-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background: #fff;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}

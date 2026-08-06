@@ -1,0 +1,23 @@
+[package]
+name = "polyguard-prover"
+version = "3.0.0"
+edition = "2021"
+description = "PolyGuard Prover & Verifier subsystem for Halo2 circuits"
+
+[dependencies]
+halo2_proofs = { version = "0.3", default-features = false }
+pasta_curves = "0.5"
+ff = "0.13"
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+
+# Reference to the local halo2 circuits crate
+polyguard-halo2-circuits = { path = "../circuits/halo2" }
+
+[features]
+default = ["std"]
+std = ["halo2_proofs/std"]
