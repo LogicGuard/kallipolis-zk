@@ -7,11 +7,13 @@ services:
       - "4500:4500"
     environment:
       - FDB_CLUSTER_FILE=/var/fdb/fdb.cluster
+    env_file: .env
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    env_file: .env
 
   ollama:
     image: ollama/ollama:latest
@@ -19,5 +21,30 @@ services:
       - "11434:11434"
     volumes:
       - ./ollama_data:/root/.ollama
+    env_file: .env
 
-  # Add service definitions for Rust microservices here
+  actor-system:
+    build:
+      context: .
+      dockerfile: actor-system/Dockerfile
+    env_file: .env
+    depends_on:
+      - redis
+      - foundationdb
+
+  consensus-engine:
+    build:
+      context: .
+      dockerfile: consensus-engine/Dockerfile
+    env_file: .env
+    depends_on:
+      - redis
+      - foundationdb
+
+  event-bus:
+    build:
+      context: .
+      dockerfile: event-bus/Dockerfile
+    env_file: .env
+    depends_on:
+      - redis

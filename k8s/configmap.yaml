@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kallipolis-config
+data:
+  # Replace with actual configuration values
+  DATABASE_URL: "sqlite+aiosqlite:///./kallipolis.db"
+  REDIS_URL: "redis://redis:6379/0"
+  FOUNDATIONDB_CLUSTER_FILE: "/var/fdb/fdb.cluster"

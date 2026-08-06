@@ -2,10 +2,19 @@
 
 Kallipolis ZK utilizes a high-performance, microkernel-based architecture designed for low-latency ZK-proof generation and robust transaction fire-walling.
 
-## High-Level Component Diagram
-[Gateway Ingress] -> [Actor System] -> [Event Bus] -> [Prover Engine / Kernel]
+## System Diagram
+```mermaid
+graph TD
+    A[Gateway Ingress] --> B[Actor System]
+    B --> C[Event Bus]
+    C --> D[Prover Engine]
+    C --> E[Polyglot Modules]
+    E --> F[Zig: Mempool Parser]
+    E --> G[Nim: Kernel Scheduler]
+    E --> H[OCaml: Formal Verifier]
+```
 
-## Component Details
+## High-Level Component Details
 - **Gateway**: Serves as the primary API ingress point, handling authentication and rate-limiting. Built using `axum` (Rust).
 - **Actor System**: Orchestrates async tasks and facilitates inter-component communication. Based on the actor model, ensuring isolation and fault tolerance.
 - **Event Bus**: High-throughput messaging backbone connecting microservices (e.g., `ActorSystem` -> `Prover`).

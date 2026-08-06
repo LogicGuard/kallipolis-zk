@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kallipolis-actor-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actor-system
+  template:
+    metadata:
+      labels:
+        app: actor-system
+    spec:
+      containers:
+      - name: actor-system
+        image: kallipolis/actor-system:latest
+        envFrom:
+        - configMapRef:
+            name: kallipolis-config
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kallipolis-consensus-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consensus-engine
+  template:
+    metadata:
+      labels:
+        app: consensus-engine
+    spec:
+      containers:
+      - name: consensus-engine
+        image: kallipolis/consensus-engine:latest
+        envFrom:
+        - configMapRef:
+            name: kallipolis-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kallipolis-event-bus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+      - name: event-bus
+        image: kallipolis/event-bus:latest
+        envFrom:
+        - configMapRef:
+            name: kallipolis-config

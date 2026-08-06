@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: actor-system
+spec:
+  selector:
+    app: actor-system
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consensus-engine
+spec:
+  selector:
+    app: consensus-engine
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus
+spec:
+  selector:
+    app: event-bus
+  ports:
+  - port: 80
+    targetPort: 8080

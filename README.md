@@ -15,18 +15,26 @@
 </p>
 
 <div align="center">
+
+  ### 🛡️ Defending the Polygon AggLayer Frontier
+  *Real-time threat intelligence for high-throughput EVM rollups.*
+
   <a href="https://kallipolis-zk.ai.studio">
-    <img src="https://img.shields.io/badge/🚀_EXPLORE_LIVE_PRODUCTION_DASHBOARD-007bff?style=for-the-badge&logo=appveyor" alt="Live Dashboard" />
+    <img src="https://img.shields.io/badge/🚀_DASHBOARD-007bff?style=for-the-badge&logo=appveyor" alt="Live Dashboard" />
   </a>
   <br>
-  <img src="https://github.com/LogicGuard/kallipolis-zk/actions/workflows/main.yml/badge.svg" alt="CI Status" />
+  
+  ![CI Status](https://github.com/LogicGuard/kallipolis-zk/actions/workflows/main.yml/badge.svg)
+  ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+  ![Rust](https://img.shields.io/badge/rust-stable-orange.svg)
+  ![Formal Verification](https://img.shields.io/badge/formal--verification-verified-brightgreen.svg)
 </div>
 
 ---
 
-### High-Performance ZK-Compliance Firewall & Polyglot Security Orchestrator for Polygon AggLayer
+### ⚡ Kallipolis ZK: The AggLayer Defensive Perimeter
 
-> **Kallipolis ZK Enterprise** is a state-of-the-art security, threat intelligence, and zero-knowledge verification firewall designed specifically for **Polygon AggLayer**, **LxLy Bridges**, and high-throughput EVM rollups. The platform combines an ultra-low latency TypeScript coordination layer with a network of specialized, native polyglot microkernels and formal mathematical verifiers.
+> **Kallipolis** is a high-octane, ZK-native mempool firewall engineered for the **Polygon AggLayer** ecosystem. We eliminate attack vectors *before* settlement, blending high-speed TypeScript orchestration with formalized polyglot microkernels.
 
 ---
 
