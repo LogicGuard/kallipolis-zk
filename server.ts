@@ -1,5 +1,6 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import http from "http";
+import jwt from "jsonwebtoken";
 import { WebSocketServer, WebSocket } from "ws";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
@@ -17,8 +18,18 @@ async function startServer() {
   const server = http.createServer(app);
   const wss = new WebSocketServer({ server });
 
-  // 1. EVENT-DRIVEN ARCHITECTURE (Mock Kafka/RabbitMQ)
-  // 3. REAL-TIME WSS
+// JWT Middleware
+const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.JWT_SECRET || 'super-secret', (err: any, user: any) => {
+    if (err) return res.sendStatus(403);
+    (req as any).user = user;
+    next();
+  });
+};
   wss.on('connection', (ws) => {
     console.log('[WebSocket] Client connected for Real-Time Mempool Stream');
     
@@ -142,7 +153,7 @@ app.post("/api/v1/ai/generate", async (req, res) => {
     });
   });
 
-  app.post("/api/v1/audit/analyze", (req, res) => {
+  app.post("/api/v1/audit/analyze", authenticateToken, (req, res) => {
     const { source_code, contract_address } = req.body || {};
     const hasReentrancy = source_code && (source_code.includes("call{value:") || source_code.includes("balances["));
     const hasTxOrigin = source_code && source_code.includes("tx.origin");
@@ -282,7 +293,7 @@ app.post("/api/v1/ai/generate", async (req, res) => {
     });
   });
 
-  app.post("/api/v1/firewall/simulate", (req, res) => {
+  app.post("/api/v1/firewall/simulate", authenticateToken, (req, res) => {
     const { calldata, value_matic } = req.body || {};
     const isMalicious = calldata && (calldata.includes("0xa9059cbb") || calldata.includes("drain")) && value_matic > 1000;
     res.json({
@@ -322,7 +333,7 @@ app.post("/api/v1/ai/generate", async (req, res) => {
   });
 
   // Kallipolis ZK Advanced R&D Security Endpoints
-  app.post("/api/v1/bridge/inspect", (req, res) => {
+  app.post("/api/v1/bridge/inspect", authenticateToken, (req, res) => {
     const { bridge_tx_hash, target_chain } = req.body || {};
     res.json({
       bridge_protocol: "Polygon LxLy Unified Bridge",

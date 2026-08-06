@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  foundationdb:
+    image: foundationdb/foundationdb:7.1.19
+    ports:
+      - "4500:4500"
+    environment:
+      - FDB_CLUSTER_FILE=/var/fdb/fdb.cluster
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama_data:/root/.ollama
+
+  # Add service definitions for Rust microservices here

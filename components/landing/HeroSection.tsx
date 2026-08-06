@@ -72,9 +72,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStart }) => {
 
                         <div className="mt-12 lg:mt-20 grid grid-cols-3 max-w-md mx-auto lg:mx-0 gap-6 border-t border-white/10 pt-8">
                             {[
-                                { label: 'Latency', val: '0.4s', sub: 'GEMINI_V3' },
-                                { label: 'Uptime', val: '99.9%', sub: 'LIVE_PULSE' },
-                                { label: 'Trust', val: '98/100', sub: 'CERTIFIED' },
+                                { label: 'Latency', val: '2.4s', sub: 'MVP_TEST_AVG' },
+                                { label: 'Status', val: 'Beta', sub: 'LIVE_TESTING' },
+                                { label: 'Circuit', val: 'Halo2', sub: 'VERIFIED' },
                             ].map((stat, i) => (
                                 <div key={i} className="flex flex-col">
                                     <span className="text-[8px] text-gray-500 font-mono uppercase tracking-[0.1em] mb-1 font-bold">{stat.label}</span>

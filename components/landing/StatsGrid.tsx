@@ -3,10 +3,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const STATS = [
-  { label: 'Cumulative Assets Scanned', value: '$1.4B+', sub: 'INSTITUTIONAL_NODES' },
-  { label: 'Security Threats Blocked', value: '42,000+', sub: 'REAL_TIME_MITIGATION' },
-  { label: 'Audit Latency Avg', value: '0.4s', sub: 'GEMINI_V3_ENGINE' },
-  { label: 'Network Uptime (Global)', value: '99.99%', sub: 'SLA_PROTECTED' },
+  { label: 'Assets Analyzed', value: '1000+', sub: 'FIREWALL_TESTS' },
+  { label: 'MEV Throughput', value: '>100 tx/s', sub: 'BATCH_DETECTION' },
+  { label: 'Audit Latency P99', value: '<15ms', sub: 'FIREWALL_BENCH' },
+  { label: 'System Status', value: 'MVP', sub: 'ACTIVE_DEVELOPMENT' },
 ];
 
 const StatsGrid: React.FC = () => {

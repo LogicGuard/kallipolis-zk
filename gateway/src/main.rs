@@ -560,4 +560,54 @@ mod tests {
         assert_eq!(firewall_res.reason, "ALLOWED_BY_ACTOR_SUITE");
         assert_eq!(firewall_res.risk_score, 5);
     }
+
+    #[tokio::test]
+    async fn test_gateway_bridge_actor_integration() {
+        let (state, mut rx) = test_setup();
+        let app = build_router(state).await;
+
+        // Spawn background task simulating actor response
+        tokio::spawn(async move {
+            if let Some(msg) = rx.recv().await {
+                match msg {
+                    ActorMessage::BridgeVerify { respond_to, .. } => {
+                        let res = BridgeVerificationResponse {
+                            verified: true,
+                            proof_root: "0xmockroot".to_string(),
+                            delay_applied: false,
+                        };
+                        respond_to.send(res).unwrap();
+                    }
+                    _ => panic!("Expected BridgeVerify message"),
+                }
+            }
+        });
+
+        let request_body = serde_json::to_string(&BridgeVerificationRequest {
+            source_chain: "polygon",
+            dest_chain: "ethereum",
+            deposit_tx: "0xsafe_bridge_tx",
+            merkle_proof: vec![],
+            amount: "100",
+        }).unwrap();
+
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .method("POST")
+                    .uri("/api/v1/bridge/verify")
+                    .header("content-type", "application/json")
+                    .body(axum::body::Body::from(request_body))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+        let body_bytes = axum::body::to_bytes(response.into_body(), 1024).await.unwrap();
+        let bridge_res: BridgeVerificationResponse = serde_json::from_slice(&body_bytes).unwrap();
+        
+        assert!(bridge_res.verified);
+        assert_eq!(bridge_res.proof_root, "0xmockroot");
+    }
 }
