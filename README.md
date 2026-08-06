@@ -37,8 +37,7 @@
 
 ---
 
-## 🏗️ System Architecture
-The following diagram illustrates how Kallipolis ZK intercepts transaction pipelines and enforces security via ZK-Circuits.
+## 🏛️ System Architecture Flow
 
 ```mermaid
 graph TD
@@ -72,31 +71,12 @@ graph TD
 
 ---
 
-## ⚡ Performance Benchmark
-Kallipolis achieves microsecond-level inspection latency.
+## 核心 (Core) Technical Innovations
 
-```mermaid
-gantt
-    title Transaction Inspection Latency (μs)
-    dateFormat  X
-    axisFormat %s
-    section Traditional Firewall
-    Analysis       :crit, 0, 5000
-    section Kallipolis ZK
-    Analysis       :0, 20
-```
-
----
-
-## 💡 Why Kallipolis?
-- **Zero-Trust Mempool:** Intercepts sandwich attacks at the bytecode level.
-- **Formally Verified:** ZK-Circuits guarantee compliance without revealing private balance data.
-- **Polyglot Engines:** Performance-critical paths written in Rust, Zig, and C++ for bare-metal speed.
-
-## 🛠️ Key Use Cases
-1. **Bridge Protection:** Prevents withdrawal batches that lack sufficient collateral.
-2. **FATF Travel Rule:** Provides zero-knowledge compliance proofs.
-3. **Mempool Integrity:** Filters malicious signatures before they reach the sequencer.
+### 1. Ultra-Low Latency Mempool Firewall
+- **Trie-Based Pattern Matching**: $O(M)$ signature lookup that parses raw contract bytecode and router call data to recognize front-running, sandwich attacks, and known malicious router signatures in microsecond bounds.
+- **LRU Cache Protection**: A thread-safe, high-capacity Least Recently Used (LRU) caching engine (default: 10,000 capacity) that stores analyzed transaction risks.
+- **Gas Security Validator**: Blocks anomalous spikes and transaction sizes that exceed standard block gas limits.
 
 ### 2. High-Fidelity Zero-Knowledge Circuits
 Kallipolis ZK bridges the gap between claims and code with mathematically sound, audited circuits:
