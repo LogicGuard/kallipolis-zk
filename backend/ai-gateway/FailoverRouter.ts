@@ -31,6 +31,13 @@ export class FailoverRouter {
             } catch (error: any) {
                 console.error(`[FailoverRouter] Provider ${provider} failed:`, error.message);
                 errors.push(`${provider}: ${error.message}`);
+                
+                // If rate limited, wait a bit before trying the next provider or before retrying
+                if (error.message.includes("429") || error.status === 429) {
+                    console.log(`[FailoverRouter] Rate limited on ${provider}. Waiting...`);
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                }
+                
                 continue; // Try next provider
             }
         }

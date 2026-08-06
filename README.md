@@ -1,28 +1,44 @@
-# 🛡️ Kallipolis ZK Enterprise (v3.0.0)
-### High-Performance ZK-Compliance Firewall & Polyglot Security Orchestrator for Polygon AggLayer
+<p align="center">
+  <pre>
+  
+  ██╗  ██╗ █████╗ ██╗     ██╗     ██╗██████╗  ██████╗ ███████╗
+  ██║ ██╔╝██╔══██╗██║     ██║     ██║██╔══██╗██╔═══██╗██╔════╝
+  █████╔╝ ███████║██║     ██║     ██║██████╔╝██║   ██║███████╗
+  ██╔═██╗ ██╔══██║██║     ██║     ██║██╔═══╝ ██║   ██║╚════██║
+  ██║  ██╗██║  ██║███████╗███████╗██║██║     ╚██████╔╝███████║
+  ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝      ╚═════╝ ╚══════╝
+  
+  -------------------------------------------------------------
+  KALLIPOLIS ZK ENTERPRISE // POLYGON AGGLAYER SECURITY
+  -------------------------------------------------------------
+  </pre>
+</p>
 
-> [!IMPORTANT]
-> **🚀 Live Demo**: [Explore the Dashboard](https://kallipolis-zk.ai.studio)
-
-```bash
-$ kallipolis-zk --init --secure
-[INFO] Starting Kallipolis Enterprise Core...
-[INFO] Loading ZK-Firewall Mempool Circuits...
-[INFO] Polyglot Microkernel Registry: [LOADED]
-[OK] Kallipolis ZK Enterprise System Ready.
-```
-
-[![Vitest Suite](https://img.shields.io/badge/Vitest-32%20Passed-brightgreen?style=flat-square&logo=vitest)](https://github.com/kallipolis/kallipolis)
-[![Linter](https://img.shields.io/badge/TS_Linter-Passing-blue?style=flat-square&logo=typescript)](https://github.com/kallipolis/kallipolis)
-[![Halo2 Circuits](https://img.shields.io/badge/Rust_Halo2-Verified-purple?style=flat-square&logo=rust)](https://github.com/kallipolis/kallipolis)
-[![Circom R1CS](https://img.shields.io/badge/Circom_2.1.0-Secured-orange?style=flat-square)](https://github.com/kallipolis/kallipolis)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-
-Kallipolis ZK Enterprise is a state-of-the-art, high-performance security, threat intelligence, and zero-knowledge verification firewall designed specifically for **Polygon AggLayer**, **LxLy Bridges**, and high-throughput EVM rollups. The platform combines an ultra-low latency TypeScript/Node.js coordination layer with a network of specialized, native polyglot microkernels (Rust, Zig, C++, Go, OCaml, Nim) and formal mathematical verifiers.
+<p align="center">
+  <a href="https://kallipolis-zk.ai.studio"><strong>🚀 EXPLORE LIVE DASHBOARD</strong></a>
+</p>
 
 ---
 
-## 🏛️ System Architecture Flow
+### High-Performance ZK-Compliance Firewall & Polyglot Security Orchestrator for Polygon AggLayer
+
+> **Kallipolis ZK Enterprise** is a state-of-the-art security, threat intelligence, and zero-knowledge verification firewall designed specifically for **Polygon AggLayer**, **LxLy Bridges**, and high-throughput EVM rollups. The platform combines an ultra-low latency TypeScript coordination layer with a network of specialized, native polyglot microkernels and formal mathematical verifiers.
+
+---
+
+### ⚡ At a Glance
+
+| Feature | Technology | Performance |
+| :--- | :--- | :--- |
+| **Mempool Firewall** | Trie-based Pattern Matching | < 0.02ms |
+| **ZK Circuits** | Halo2 & Circom 2.1.0 | Soundness Verified |
+| **Microkernels** | Rust, Zig, C++, Go, OCaml, Nim | Native Execution |
+| **Orchestration** | TypeScript Microkernel Registry | Low-Latency RPC |
+
+---
+
+## 🏗️ System Architecture
+The following diagram illustrates how Kallipolis ZK intercepts transaction pipelines and enforces security via ZK-Circuits.
 
 ```mermaid
 graph TD
@@ -56,70 +72,77 @@ graph TD
 
 ---
 
-## ⚡ Core Technical Innovations
+## ⚡ Performance Benchmark
+Kallipolis achieves microsecond-level inspection latency.
 
-### 1. Ultra-Low Latency Mempool Firewall
-- **Trie-Based Pattern Matching**: $O(M)$ signature lookup that parses raw contract bytecode and router call data to recognize front-running, sandwich attacks, and known malicious router signatures in microsecond bounds.
-- **LRU Cache Protection**: A thread-safe, high-capacity Least Recently Used (LRU) caching engine (default: 10,000 capacity) that stores analyzed transaction risks, dropping inspection latencies to **`< 0.02ms`** for high-frequency RPC pipelines.
-- **Gas Security Validator**: Blocks anomalous spikes and transaction sizes that exceed the standard 15M block gas limit, shielding networks from resource exhaustion attacks.
+```mermaid
+gantt
+    title Transaction Inspection Latency (μs)
+    dateFormat  X
+    axisFormat %s
+    section Traditional Firewall
+    Analysis       :crit, 0, 5000
+    section Kallipolis ZK
+    Analysis       :0, 20
+```
+
+---
+
+## 💡 Why Kallipolis?
+- **Zero-Trust Mempool:** Intercepts sandwich attacks at the bytecode level.
+- **Formally Verified:** ZK-Circuits guarantee compliance without revealing private balance data.
+- **Polyglot Engines:** Performance-critical paths written in Rust, Zig, and C++ for bare-metal speed.
+
+## 🛠️ Key Use Cases
+1. **Bridge Protection:** Prevents withdrawal batches that lack sufficient collateral.
+2. **FATF Travel Rule:** Provides zero-knowledge compliance proofs.
+3. **Mempool Integrity:** Filters malicious signatures before they reach the sequencer.
 
 ### 2. High-Fidelity Zero-Knowledge Circuits
 Kallipolis ZK bridges the gap between claims and code with mathematically sound, audited circuits:
-#### A. Plonkish Halo2 SNARKs (`circuits/halo2/src/`)
-- **Mempool Compliance (`mempool_circuit.rs`)**:
-  - *Risk Threshold constraint*: $\text{s\_malicious} \times \text{is\_malicious} \times (50 - \text{risk\_score}) = 0$.
-  - *Gas Price penalty check*: $\text{s\_gas\_check} \times \text{is\_malicious} \times (\text{gas\_price} - 1,000,000,000) = 0$.
-  - *Boolean constraint*: $\text{s\_range} \times \text{is\_malicious} \times (1 - \text{is\_malicious}) = 0$.
-- **Bridge Sentinel (`bridge_circuit.rs`)**:
-  - *Merkle Sibling pairing check*: $\text{s\_merkle} \times (\text{parent\_hash} - (\text{leaf} \times \text{sibling} \times 5)) = 0$.
-  - *Destination integrity check*: $\text{s\_integrity} \times (\text{chain\_id} - 137) = 0$ (Asserts destination is Polygon Mainnet).
-- **Solvency Invariant (`balance_circuit.rs`)**:
-  - *Surplus integrity check*: $\text{s\_balance} \times (\text{total\_deposited} - \text{total\_withdrawn} - \text{surplus}) = 0$.
-  - *Regulatory Reserve protection*: $\text{s\_non\_inflationary} \times (\text{actual\_reserve\_ratio} - \text{min\_threshold}) \times 10 = 0$.
-- **FATF Travel Rule Compliance (`compliance_circuit.rs`)**:
-  - Proves regulatory compliance while preserving private balance confidentiality.
 
-#### B. Circom 2.1.0 Equivalents (`circuits/circom/`)
-- `mempool.circom`: Enforces malicious gas penalties with custom comparison modules (`GreaterEqThan`, `Num2Bits`).
-- `bridge.circom`: Navigates Merkle trees using `SwapMultiplexer` and `HashPairing` to prove deposit eligibility.
-- `balance.circom`: Direct summation array arithmetic to assert deposit pools fully collateralize withdrawal batches.
+> [!NOTE]
+> **Halo2 Plonkish SNARKs (`circuits/halo2/`)**
+> Covers Mempool Compliance, Bridge Sentinel checks (Merkle integrity), Solvency Invariants, and FATF Travel Rule Compliance.
+
+> [!NOTE]
+> **Circom 2.1.0 Equivalents (`circuits/circom/`)**
+> Enforces rigorous constraints for malicious gas penalties and Merkle tree navigation to prove deposit eligibility.
 
 ### 3. Polyglot Microkernel Architecture (`services/polyglot/`)
 By utilizing native languages for performance-critical components, we secure execution paths:
-- **Rust (SP1 zkVM)**: Verifies state transition proofs recursively.
-- **Zig (Direct Memory Arena)**: Fast-path raw transaction serialization with zero-allocation mechanics.
-- **C++ (Clang Optimized)**: Bytecode compilation on EVM trace trees to build real-time execution models.
+- **Rust (SP1 zkVM)**: Recursive state transition proof verification.
+- **Zig**: Fast-path raw transaction serialization with zero-allocation mechanics.
+- **C++**: EVM trace tree compilation for real-time execution models.
 - **OCaml**: Formal inductive mathematical checks for bridging parameters.
-- **Nim**: Constantine cryptography integration for low-overhead JSON-RPC relays.
-- **Go**: Validator synchronizations through concurrent, lock-free channels.
+- **Nim**: Constantine cryptography integration.
+- **Go**: Concurrent, lock-free validator synchronization.
 
 ---
 
 ## 📂 Repository Layout
 
-```
+```text
 kallipolis-enterprise/
 ├── services/                  # Orchestration Layer (Optimized Firewall, Z3 Symbolic solver)
 ├── circuits/                  # Cryptographic ZK Circuits
 │   ├── halo2/                 # Plonkish circuits with MockProver suite
 │   └── circom/                # R1CS constraints (Mempool, Merkle, Solvency)
-├── prover/                    # Rust Proof Generation & Verifying Engine Crate
-├── components/                # Advanced Dashboard Views (React, D3.js, Tailwind, Framer Motion)
-├── __tests__/                 # High-Coverage Automated Verification and Benchmarks
-├── metadata.json              # Platform Capabilities Manifest
-└── package.json               # Node.js dependencies & scripts
+├── prover/                    # Rust Proof Generation & Verifying Engine
+├── components/                # Advanced Dashboard Views
+├── __tests__/                 # Verification and Benchmarks
+└── package.json               # Platform Manifest
 ```
 
 ---
 
-## ⚡ Setup, Testing & Verification
+## ⚡ Deployment & Verification
 
-### 1. Prerequisites
-- **Node.js**: v18+ (Vite, Vitest, and Express build environment)
-- **Rust / Cargo**: (To compile, run, and test Halo2 circuits & prover engines)
+### Prerequisites
+- **Node.js**: v18+ 
+- **Rust / Cargo**: Required for circuit compilation & prover engines.
 
-### 2. Node.js Installation & Automated Testing
-Install dependencies and run the complete performance benchmark and verification test suite:
+### Automated Testing
 ```bash
 # Install node packages
 npm install
@@ -128,36 +151,24 @@ npm install
 npm run test
 ```
 
-### 3. Running Rust Circuit & Prover Unit Tests
-To verify the math behind our Plonkish circuits and proving pipeline:
+### Circuit Verification
 ```bash
-# 1. Run Halo2 circuit unit tests (Mempool, Bridge, Balance, Compliance)
+# 1. Run Halo2 circuit unit tests
 cd circuits/halo2
 cargo test
 
-# 2. Run ProofSystem key compilation & generation lifecycle tests
+# 2. Run ProofSystem lifecycle tests
 cd ../../prover
 cargo test
 ```
 
-### 4. Continuous Integration
-All PRs must pass the standard build, lint, and security pipelines:
-```bash
-# Ensure strict type-checking and code cleanliness
-npm run lint
-
-# Compile and build production bundles
-npm run build
-```
-
 ---
 
-## 🔐 Security & Audit Policies
-
+## 🛡️ Security & Audit
 Please refer to [SECURITY.md](SECURITY.md) to report vulnerabilities, explore response SLAs, or review our active **Bug Bounty Program**.
 
 ---
 
-## 📄 License
-
-MIT License - Copyright (c) 2026 Kallipolis ZK Enterprise.
+<p align="center">
+  MIT License - Copyright (c) 2026 Kallipolis ZK Enterprise.
+</p>
