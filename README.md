@@ -37,36 +37,25 @@
 
 ---
 
-## 🏛️ System Architecture Flow
+## 📑 Table of Contents
+- [At a Glance](#-at-a-glance)
+- [System Architecture Flow](#-system-architecture-flow)
+- [Core Technical Innovations](#-core-technical-innovations)
+- [Repository Layout](#-repository-layout)
+- [Deployment & Verification](#-deployment--verification)
+- [Security & Audit](#-security--audit)
+
+---
+
 
 ```mermaid
-graph TD
-    A[Inbound RPC Transactions] --> B[Mempool Firewall Trie-Matching]
-    B -->|Cache Miss| C[Risk Score & Threat Analysis]
-    B -->|Cache Hit < 0.02ms| D[LRU Eviction Queue]
-    C --> E[Polyglot Microkernel Registry]
-    
-    subgraph Microkernels [Native Polyglot Engines]
-        E1[Rust SP1 zkVM]
-        E2[Zig calldata parser]
-        E3[C++ JIT Compiler]
-        E4[OCaml Bridge Verifier]
-        E5[Nim RPC Relay]
-        E6[Go Consensus Sync]
-    end
-    
-    E --> E1 & E2 & E3 & E4 & E5 & E6
-    
-    subgraph ZKProofSystem [Zero-Knowledge Proofs & Circuits]
-        H1[Halo2 Plonkish Circuits]
-        H2[Circom R1CS Models]
-        H3[Inner Product Argument IPA]
-    end
-    
-    E1 --> H1
-    E4 --> H2
-    H1 & H2 --> H3
-    H3 --> F[Consensus Integration & AggLayer Exit Root]
+graph LR
+    Inbound --> Firewall{Mempool Firewall}
+    Firewall -->|Cache Match| Fast[Fast Path: <0.02ms]
+    Firewall -->|Cache Miss| Analysis[Risk Scoring]
+    Analysis --> Microkernel[Polyglot Microkernel Registry]
+    Microkernel --> Prover[ZK Proof System]
+    Prover --> Final[Consensus & AggLayer]
 ```
 
 ---
@@ -74,9 +63,11 @@ graph TD
 ## 核心 (Core) Technical Innovations
 
 ### 1. Ultra-Low Latency Mempool Firewall
-- **Trie-Based Pattern Matching**: $O(M)$ signature lookup that parses raw contract bytecode and router call data to recognize front-running, sandwich attacks, and known malicious router signatures in microsecond bounds.
-- **LRU Cache Protection**: A thread-safe, high-capacity Least Recently Used (LRU) caching engine (default: 10,000 capacity) that stores analyzed transaction risks.
-- **Gas Security Validator**: Blocks anomalous spikes and transaction sizes that exceed standard block gas limits.
+The Kallipolis firewall acts as the first line of defense, performing deep packet inspection on inbound RPC calls before they touch the mempool.
+
+- **Trie-Based Pattern Matching**: Utilizes a highly optimized, custom Trie structure for $O(M)$ (where M is pattern depth) signature lookup. This allows us to parse raw EVM contract bytecode and router call data to instantly recognize sophisticated MEV patterns (front-running, sandwich attacks) and malicious router signatures within microsecond bounds.
+- **LRU Cache Protection**: A thread-safe, high-concurrency Least Recently Used (LRU) caching engine (default: 10,000 capacity). By caching the risk-assessment results of known transaction hashes, we achieve consistent latency **< 0.02ms** for high-frequency RPC pipelines, effectively bypassing the full analysis stack for repetitive traffic.
+- **Gas-Dynamic Security Validator**: Implements a proactive validator that doesn't just block static gas limits, but evaluates the gas consumption *relative* to the specific contract call signature, preventing resource exhaustion attacks (DDoS) designed to exploit high-complexity smart contract execution paths.
 
 ### 2. High-Fidelity Zero-Knowledge Circuits
 Kallipolis ZK bridges the gap between claims and code with mathematically sound, audited circuits:
