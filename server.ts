@@ -5,7 +5,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
-import { globalApiLimiter, strictApiLimiter } from "./middleware/rateLimiter";
+import { globalApiLimiter, strictApiLimiter, staticFileLimiter } from "./middleware/rateLimiter";
 import { PolyglotEngineManager } from "./services/polyglot/polyglot.service";
 import { bridgeSentinel } from "./services/bridge.sentinel.service";
 import { ModelConfigRouter } from "./backend/ai-gateway/UserConfigApi";
@@ -486,8 +486,12 @@ app.post("/api/v1/ai/generate", async (req, res) => {
     }
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*all", (req, res) => {
+    app.use(express.static(distPath, {
+      maxAge: "1d",
+      etag: true,
+      lastModified: true
+    }));
+    app.get("*all", staticFileLimiter, (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }

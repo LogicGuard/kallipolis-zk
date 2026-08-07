@@ -21,3 +21,15 @@ export const strictApiLimiter = rateLimit({
     error: "Security analysis rate limit exceeded. Please wait 15 minutes."
   }
 });
+
+// Static assets / SPA fallback rate limiter to prevent DoS on filesystem I/O
+export const staticFileLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 500, // 500 requests per 15 mins per IP
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: {
+    error: "Too many static page load requests. Please wait 15 minutes."
+  }
+});
+
