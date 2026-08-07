@@ -20,7 +20,7 @@
     "d3": "^7.9.0",
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.2",
-    "framer-motion": "^11.3.19",
+    "framer-motion": "^12.43.0",
     "jsonwebtoken": "^9.0.3",
     "openai": "^7.4.0",
     "prom-client": "^15.1.3",
