@@ -33,7 +33,7 @@
     "@types/d3": "^7.4.3",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^22.14.0",
+    "@types/node": "^26.1.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@types/swagger-ui-express": "^4.1.8",
