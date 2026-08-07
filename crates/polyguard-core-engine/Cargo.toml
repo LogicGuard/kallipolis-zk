@@ -1,0 +1,11 @@
+[package]
+name = "polyguard-core-engine"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sha3 = "0.10"
+
+[features]
+default = ["std"]
+std = ["sha3/std"]

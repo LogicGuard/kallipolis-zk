@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "polyguard-core-engine",
+    "polyguard-rpc-proxy",
+]
+resolver = "2"

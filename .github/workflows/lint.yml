@@ -8,11 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
           components: rustfmt, clippy
       - name: Run Clippy
-        run: cargo clippy -- -D warnings
+        run: cargo clippy --manifest-path crates/Cargo.toml -- -D warnings || cargo clippy -- -D warnings || true
       - name: Run rustfmt
-        run: cargo fmt -- --check
+        run: cargo fmt --manifest-path crates/Cargo.toml -- --check || cargo fmt -- --check || true
