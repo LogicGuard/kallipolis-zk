@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:bench": "vitest bench",
+    "test:bench": "vitest run __tests__/*.benchmark.test.ts",
     "test:e2e": "vitest run __tests__/web3.e2e.test.ts",
     "test:watch": "vitest",
     "start": "node dist/server.cjs"
