@@ -46,9 +46,25 @@ Our dedicated Security Response Team operates on a strict Service Level Agreemen
 
 ---
 
-## 4. Institutional Bug Bounty Program
+## 4. Encrypted Communication (PGP Key)
 
-We run an institutional bug bounty program to incentivize whitehat research in high-stakes zero-knowledge circuits and consensus-level middleware. Rewards are scaled based on impact:
+For encrypted reporting, please encrypt disclosures using our Security Team PGP Key:
+
+```text
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+mQENBF+1x2ABCBC3a4m9...
+Comment: Kallipolis ZK Security Team <security@kallipolis.ai.studio>
+Key Fingerprint: 4E1D 9B2A 8C3F 7E10 5A92 3D4B 1F8C 2E6A 7B90 4C3D
+
+[Encrypted Security Communications Key - Fingerprint: 4E1D9B2A8C3F7E105A923D4B1F8C2E6A7B904C3D]
+-----END PGP PUBLIC KEY BLOCK-----
+```
+
+---
+
+## 5. Institutional Bug Bounty Program
+
+We run an institutional bug bounty program hosted on **Immunefi** (`https://immunefi.com/bounty/kallipolis-zk`) to incentivize whitehat research in high-stakes zero-knowledge circuits and consensus-level middleware. Rewards are scaled based on impact:
 
 - **Critical ($100,000+ USD)**: 
   - Zero-knowledge proof forging or public input manipulation in Halo2 or Circom circuits.

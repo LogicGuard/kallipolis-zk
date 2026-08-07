@@ -30,7 +30,8 @@ const RegulatoryComplianceView: React.FC = () => {
         setIsLoading(false);
     };
 
-    const getRiskColor = (level: string) => {
+    const getRiskColor = (level?: string) => {
+        if (!level) return 'text-yellow-400';
         const l = level.toLowerCase();
         if (l.includes('low')) return 'text-green-400';
         if (l.includes('medium')) return 'text-yellow-400';
@@ -82,12 +83,12 @@ const RegulatoryComplianceView: React.FC = () => {
                             <div className="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500 uppercase">
                                 <ActivityIcon className="w-4 h-4" /> AML Monitoring
                             </div>
-                            <div className={`text-2xl font-black font-mono mb-2 uppercase ${getRiskColor(result.amlRisk.level)}`}>
-                                {result.amlRisk.level}_RISK
+                            <div className={`text-2xl font-black font-mono mb-2 uppercase ${getRiskColor(result?.amlRisk?.level)}`}>
+                                {result?.amlRisk?.level || 'UNKNOWN'}_RISK
                             </div>
-                            <p className="text-[11px] text-gray-400 font-mono leading-relaxed mb-4">{result.amlRisk.summary}</p>
+                            <p className="text-[11px] text-gray-400 font-mono leading-relaxed mb-4">{result?.amlRisk?.summary || 'No AML summary provided.'}</p>
                             <div className="space-y-1.5">
-                                {result.amlRisk.flags.map((flag, i) => (
+                                {(result?.amlRisk?.flags || []).map((flag, i) => (
                                     <div key={i} className="flex gap-2 items-center text-[9px] font-mono text-red-400 bg-red-500/5 p-1 px-2 border border-red-500/10">
                                         <ThreatIcon className="w-2.5 h-2.5" /> {flag}
                                     </div>
@@ -99,10 +100,10 @@ const RegulatoryComplianceView: React.FC = () => {
                             <div className="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500 uppercase">
                                 <ShieldCheckIcon className="w-4 h-4" /> Status
                             </div>
-                            <div className={`text-2xl font-black font-mono mb-2 uppercase ${result.complianceStatus.status === 'Compliant' ? 'text-green-400' : 'text-yellow-400'}`}>
-                                {result.complianceStatus.status}
+                            <div className={`text-2xl font-black font-mono mb-2 uppercase ${result?.complianceStatus?.status === 'Compliant' ? 'text-green-400' : 'text-yellow-400'}`}>
+                                {result?.complianceStatus?.status || 'REVIEW_PENDING'}
                             </div>
-                            <p className="text-[11px] text-gray-400 font-mono leading-relaxed">{result.complianceStatus.summary}</p>
+                            <p className="text-[11px] text-gray-400 font-mono leading-relaxed">{result?.complianceStatus?.summary || 'Compliance status details pending.'}</p>
                         </Card>
 
                         <Card className="p-6 bg-[#0C0C0C] border-blue-500/20">
@@ -110,10 +111,10 @@ const RegulatoryComplianceView: React.FC = () => {
                                 <ComplianceIcon className="w-4 h-4" /> Legal Score
                             </div>
                             <div className="flex items-baseline gap-2 mb-4">
-                                <span className="text-5xl font-black font-mono text-white">{result.legalRisk.score}</span>
+                                <span className="text-5xl font-black font-mono text-white">{result?.legalRisk?.score ?? 0}</span>
                                 <span className="text-xs font-mono text-gray-600">/100</span>
                             </div>
-                            <p className="text-[11px] text-gray-300 font-mono leading-relaxed">{result.legalRisk.summary}</p>
+                            <p className="text-[11px] text-gray-300 font-mono leading-relaxed">{result?.legalRisk?.summary || 'Legal risk summary pending.'}</p>
                         </Card>
                     </motion.div>
                 ) : (

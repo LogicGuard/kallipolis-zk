@@ -18,6 +18,15 @@ async function startServer() {
   const server = http.createServer(app);
   const wss = new WebSocketServer({ server });
 
+  // Security Headers Middleware
+  app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    next();
+  });
+
 // JWT Middleware
 const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
@@ -47,6 +56,11 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
         }));
       }
     }, 1500);
+
+    ws.on('error', (err) => {
+      console.warn('[WebSocket] Client socket error:', err.message);
+      clearInterval(interval);
+    });
 
     ws.on('close', () => clearInterval(interval));
   });

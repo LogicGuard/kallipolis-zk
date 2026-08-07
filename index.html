@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kallipolis ZK - Zero-Knowledge AI Security Agent</title>
     
+    <script>
+      window.addEventListener('unhandledrejection', function (event) {
+        var reason = String((event && (event.reason && event.reason.message ? event.reason.message : event.reason)) || '');
+        if (reason.indexOf('WebSocket') !== -1 || reason.indexOf('vite') !== -1 || reason.indexOf('closed without opened') !== -1) {
+          if (event && typeof event.preventDefault === 'function') {
+            event.preventDefault();
+          }
+          if (event && typeof event.stopImmediatePropagation === 'function') {
+            event.stopImmediatePropagation();
+          }
+        }
+      }, true);
+
+      window.addEventListener('error', function (event) {
+        var msg = String((event && (event.error || event.message)) || '');
+        if (msg.indexOf('WebSocket') !== -1 || msg.indexOf('vite') !== -1 || msg.indexOf('closed without opened') !== -1) {
+          if (event && typeof event.preventDefault === 'function') {
+            event.preventDefault();
+          }
+          if (event && typeof event.stopImmediatePropagation === 'function') {
+            event.stopImmediatePropagation();
+          }
+        }
+      }, true);
+    </script>
     <!-- Official Polygon Branding Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

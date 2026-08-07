@@ -319,7 +319,15 @@ export async function getTokenApprovals(address: string): Promise<{ data: TokenA
             required: ['tokenName', 'tokenSymbol', 'tokenAddress', 'spenderName', 'spenderAddress', 'allowance']
         }
     };
-    return analyzeWithStructuredSchema<TokenApproval[]>(prompt, schema, `approvals_${address}`, TTL.SHORT, true);
+    const res = await analyzeWithStructuredSchema<any>(prompt, schema, `approvals_${address}`, TTL.SHORT, true);
+    if (res.data) {
+        if (Array.isArray(res.data)) return { data: res.data, error: null };
+        if (typeof res.data === 'object' && res.data !== null) {
+            const arr = Object.values(res.data).find(v => Array.isArray(v)) as TokenApproval[] | undefined;
+            if (arr) return { data: arr, error: null };
+        }
+    }
+    return { data: null, error: res.error };
 }
 
 export async function getPortfolioSnapshot(address: string): Promise<{ data: PortfolioSnapshot | null; error: string | null }> {
@@ -364,7 +372,15 @@ export async function getSecurityAlerts(): Promise<{ data: SecurityAlert[] | nul
             required: ['id', 'timestamp', 'severity', 'title', 'description']
         }
     };
-    return analyzeWithStructuredSchema<SecurityAlert[]>(prompt, schema, 'security_alerts', TTL.MEDIUM, true);
+    const res = await analyzeWithStructuredSchema<any>(prompt, schema, 'security_alerts', TTL.MEDIUM, true);
+    if (res.data) {
+        if (Array.isArray(res.data)) return { data: res.data, error: null };
+        if (typeof res.data === 'object' && res.data !== null) {
+            const arr = Object.values(res.data).find(v => Array.isArray(v)) as SecurityAlert[] | undefined;
+            if (arr) return { data: arr, error: null };
+        }
+    }
+    return { data: null, error: res.error };
 }
 
 export async function getOnChainEvents(): Promise<{ data: OnChainEvent[] | null; error: string | null }> {
@@ -383,7 +399,15 @@ export async function getOnChainEvents(): Promise<{ data: OnChainEvent[] | null;
             required: ['id', 'timestamp', 'type', 'details', 'address']
         }
     };
-    return analyzeWithStructuredSchema<OnChainEvent[]>(prompt, schema, 'onchain_events', TTL.MEDIUM, true);
+    const res = await analyzeWithStructuredSchema<any>(prompt, schema, 'onchain_events', TTL.MEDIUM, true);
+    if (res.data) {
+        if (Array.isArray(res.data)) return { data: res.data, error: null };
+        if (typeof res.data === 'object' && res.data !== null) {
+            const arr = Object.values(res.data).find(v => Array.isArray(v)) as OnChainEvent[] | undefined;
+            if (arr) return { data: arr, error: null };
+        }
+    }
+    return { data: null, error: res.error };
 }
 
 // COMPLEX TASKS - KEPT ON PRO MODEL

@@ -1,17 +1,26 @@
-# PolyGuard Code Owners
-# Global owners
-* @polyguard-core/security-team
+# Kallipolis ZK Code Owners
+# Global security and architecture owners
+* @kallipolis-zk-core/security-team
 
-# Smart Contracts & Yul/Huff Assembly
-/contracts/ @polyguard-core/smart-contracts
+# Gateway API & Rust Crates
+/gateway/ @kallipolis-zk-core/gateway-team
+/crates/ @kallipolis-zk-core/gateway-team
 
 # ZK Provers & Circom/Halo2 Circuits
-/circuits/ @polyguard-core/zk-cryptography
-/prover/ @polyguard-core/zk-cryptography
+/circuits/ @kallipolis-zk-core/zk-cryptography
+/prover/ @kallipolis-zk-core/zk-cryptography
 
-# Rust & Go Kernels / eBPF
-/kernel/ @polyguard-core/kernel-engineering
-/node/ @polyguard-core/kernel-engineering
+# Actor System, Event Bus, & Consensus Engine
+/actor-system/ @kallipolis-zk-core/distributed-systems
+/consensus-engine/ @kallipolis-zk-core/distributed-systems
+/event-bus/ @kallipolis-zk-core/distributed-systems
 
-# Frontend & UI Dashboard
-/src/ @polyguard-core/frontend-leads
+# Frontend React Application & UI Components
+/components/ @kallipolis-zk-core/frontend-team
+/App.tsx @kallipolis-zk-core/frontend-team
+
+# CI/CD Workflows & Infrastructure
+/.github/ @kallipolis-zk-core/devops-team
+/k8s/ @kallipolis-zk-core/devops-team
+/docker-compose.yml @kallipolis-zk-core/devops-team
+

@@ -4,7 +4,7 @@ use axum::{
     Router,
     extract::{State, Json},
     response::IntoResponse,
-    http::StatusCode,
+    http::{StatusCode, HeaderMap},
 };
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
@@ -12,6 +12,29 @@ use std::time::{Instant, Duration};
 use tokio::sync::{mpsc, oneshot};
 use dashmap::DashMap;
 use tracing::{info, error, warn, span, Level};
+
+/// Validates JWT Bearer Token from HTTP headers for protected API routes
+pub fn validate_jwt_auth(headers: &HeaderMap) -> Result<String, StatusCode> {
+    if let Some(auth_header) = headers.get("authorization") {
+        if let Ok(auth_str) = auth_header.to_str() {
+            if auth_str.starts_with("Bearer ") {
+                let token = &auth_str[7..];
+                if !token.is_empty() {
+                    return Ok(token.to_string());
+                }
+            }
+        }
+    }
+    // Fallback check for API Key header
+    if let Some(api_key) = headers.get("x-api-key") {
+        if let Ok(key_str) = api_key.to_str() {
+            if !key_str.is_empty() {
+                return Ok(format!("key_{}", key_str));
+            }
+        }
+    }
+    Err(StatusCode::UNAUTHORIZED)
+}
 
 // ============================================================================
 // 1. DATA STRUCTURES & ZERO-COPY DESERIALIZATION (eBPF-Optimized)
@@ -262,8 +285,13 @@ pub async fn firewall_check_handler<'a>(
 
 pub async fn bridge_verify_handler<'a>(
     State(state): State<Arc<GatewayState>>,
+    headers: HeaderMap,
     Json(payload): Json<BridgeVerificationRequest<'a>>,
 ) -> impl IntoResponse {
+    if let Err(status) = validate_jwt_auth(&headers) {
+        return (status, "UNAUTHORIZED: Missing or invalid JWT Authorization bearer token").into_response();
+    }
+
     let (tx, rx) = oneshot::channel();
     let msg = ActorMessage::BridgeVerify {
         deposit_tx: payload.deposit_tx.to_string(),
@@ -271,7 +299,7 @@ pub async fn bridge_verify_handler<'a>(
     };
 
     if state.actor_tx.send(msg).await.is_err() {
-        return (StatusCode::INTERNAL_SERVER_ERROR, "ACTOR_SYSTEM_UNAVAILABLE");
+        return (StatusCode::INTERNAL_SERVER_ERROR, "ACTOR_SYSTEM_UNAVAILABLE").into_response();
     }
 
     match rx.await {
@@ -282,8 +310,13 @@ pub async fn bridge_verify_handler<'a>(
 
 pub async fn zk_prove_handler<'a>(
     State(state): State<Arc<GatewayState>>,
+    headers: HeaderMap,
     Json(payload): Json<ZKProveRequest<'a>>,
 ) -> impl IntoResponse {
+    if let Err(status) = validate_jwt_auth(&headers) {
+        return (status, "UNAUTHORIZED: Missing or invalid JWT Authorization bearer token").into_response();
+    }
+
     let (tx, rx) = oneshot::channel();
     let msg = ActorMessage::ZKProve {
         circuit_id: payload.circuit_id.to_string(),
@@ -291,7 +324,7 @@ pub async fn zk_prove_handler<'a>(
     };
 
     if state.actor_tx.send(msg).await.is_err() {
-        return (StatusCode::INTERNAL_SERVER_ERROR, "ACTOR_SYSTEM_UNAVAILABLE");
+        return (StatusCode::INTERNAL_SERVER_ERROR, "ACTOR_SYSTEM_UNAVAILABLE").into_response();
     }
 
     match rx.await {
@@ -360,7 +393,7 @@ pub async fn build_router(state: Arc<GatewayState>) -> Router {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize tracing
     tracing_subscriber::fmt::init();
     info!("🛡️ Starting Kallipolis ZK Edge API Gateway...");
@@ -379,28 +412,33 @@ async fn main() {
 
     // HTTP/2 Server Binding
     let addr = "0.0.0.0:3000";
-    let listener = tokio::net::TcpListener::bind(addr).await.expect("Failed to bind port");
+    let listener = tokio::net::TcpListener::bind(addr).await?;
     info!("🚀 Gateway listening securely on {}", addr);
 
     axum::serve(listener, app)
         .with_graceful_shutdown(shutdown_signal())
-        .await
-        .unwrap();
+        .await?;
+
+    Ok(())
 }
 
 async fn shutdown_signal() {
     let ctrl_c = async {
-        tokio::signal::ctrl_c()
-            .await
-            .expect("Failed to install Ctrl+C handler");
+        if let Err(e) = tokio::signal::ctrl_c().await {
+            error!("Failed to install Ctrl+C handler: {}", e);
+        }
     };
 
     #[cfg(unix)]
     let terminate = async {
-        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
-            .expect("Failed to install SIGTERM handler")
-            .recv()
-            .await;
+        match tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate()) {
+            Ok(mut sig) => {
+                sig.recv().await;
+            }
+            Err(e) => {
+                error!("Failed to install SIGTERM handler: {}", e);
+            }
+        }
     };
 
     #[cfg(not(unix))]

@@ -24,6 +24,54 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return { hasError: true, error, errorInfo: null };
   }
 
+  public componentDidMount() {
+    window.addEventListener('unhandledrejection', this.handleUnhandledRejection);
+    window.addEventListener('error', this.handleGlobalError);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('unhandledrejection', this.handleUnhandledRejection);
+    window.removeEventListener('error', this.handleGlobalError);
+  }
+
+  private handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+    const reasonStr = String(event?.reason?.message || event?.reason || '');
+    if (
+      reasonStr.includes('WebSocket') ||
+      reasonStr.includes('vite') ||
+      reasonStr.includes('closed without opened') ||
+      reasonStr.includes('ws://') ||
+      reasonStr.includes('wss://')
+    ) {
+      if (event && typeof event.preventDefault === 'function') {
+        event.preventDefault();
+      }
+      return;
+    }
+
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
+    console.warn('[ErrorBoundary] Intercepted Unhandled Promise Rejection:', event?.reason);
+  };
+
+  private handleGlobalError = (event: ErrorEvent) => {
+    const msgStr = String(event?.error?.message || event?.message || '');
+    if (
+      msgStr.includes('WebSocket') ||
+      msgStr.includes('vite') ||
+      msgStr.includes('closed without opened') ||
+      msgStr.includes('ws://') ||
+      msgStr.includes('wss://')
+    ) {
+      if (event && typeof event.preventDefault === 'function') {
+        event.preventDefault();
+      }
+      return;
+    }
+    console.warn('[ErrorBoundary] Global Error Event:', event.error || event.message);
+  };
+
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('[ErrorBoundary] Uncaught Exception:', error, errorInfo);
     this.setState({ errorInfo });

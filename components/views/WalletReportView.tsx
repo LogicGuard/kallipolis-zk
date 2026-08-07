@@ -19,25 +19,29 @@ const WalletReportView: React.FC = () => {
     const { account } = useWallet();
 
     const handleAnalyze = async () => {
-        const addressToAnalyze = address.trim() || account;
-        if (!addressToAnalyze) {
-            setError('Please enter a wallet address or connect your wallet.');
-            return;
-        }
-        setIsLoading(true);
-        setResult(null);
-        setError(null);
-        
-        const { data, error: apiError } = await analyzeWalletReport(addressToAnalyze);
+        try {
+            const addressToAnalyze = address.trim() || account;
+            if (!addressToAnalyze) {
+                setError('Please enter a wallet address or connect your wallet.');
+                return;
+            }
+            setIsLoading(true);
+            setResult(null);
+            setError(null);
+            
+            const { data, error: apiError } = await analyzeWalletReport(addressToAnalyze);
 
-        if (data) {
-            setResult(data);
+            if (data) {
+                setResult(data);
+            }
+            if (apiError) {
+                setError(apiError);
+            }
+        } catch (err: any) {
+            setError(err?.message || 'An unexpected error occurred during wallet analysis.');
+        } finally {
+            setIsLoading(false);
         }
-        if (apiError) {
-            setError(apiError);
-        }
-        
-        setIsLoading(false);
     };
 
     const getRiskColor = (riskLevel: 'Safe' | 'Caution' | 'High Risk') => {

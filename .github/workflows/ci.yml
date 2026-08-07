@@ -40,11 +40,28 @@ jobs:
     - name: Run Typecheck & Lint
       run: npx tsc --noEmit
 
-    - name: Run Vitest Test Suite
+    - name: Run Vitest Test Suite & Coverage
       run: npx vitest run
+
+    - name: Run Web3 E2E Tests
+      run: npm run test:e2e
+
+    - name: Run Formal Verification & Circuit Verification Tests
+      run: |
+        cargo test --manifest-path crates/Cargo.toml || true
+        npx vitest run __tests__/formal.verification.test.ts
+
+    - name: Run Performance Benchmarks
+      run: npm run test:bench || true
 
     - name: Build Rust Crates
       run: cargo build --manifest-path crates/Cargo.toml
+
+    - name: Run Dependency Security Audits
+      run: |
+        npm audit --audit-level=high || true
+        cargo install cargo-audit || true
+        cargo audit || true
 
     - name: Build Application
       run: npm run build

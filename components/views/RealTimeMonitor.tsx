@@ -131,7 +131,22 @@ const RealTimeMonitor: React.FC = () => {
         }
 
         return () => {
-            if (ws) ws.close();
+            if (ws) {
+                ws.onopen = null;
+                ws.onmessage = null;
+                ws.onerror = null;
+                ws.onclose = null;
+                
+                try {
+                    if (ws.readyState === WebSocket.OPEN) {
+                        ws.close();
+                    } else if (ws.readyState === WebSocket.CONNECTING) {
+                        ws.addEventListener('open', () => {
+                            try { ws.close(); } catch (_) {}
+                        }, { once: true });
+                    }
+                } catch (_) {}
+            }
         };
     }, []);
 
@@ -159,15 +174,17 @@ const RealTimeMonitor: React.FC = () => {
                 getOnChainEvents()
             ]);
             
-            if (alertsResult.data) {
+            if (Array.isArray(alertsResult.data)) {
+                const alertsList = alertsResult.data;
                 setAlerts(prev => {
-                    const newItems = alertsResult.data!.filter(n => !prev.some(p => p.id === n.id));
+                    const newItems = alertsList.filter(n => n && typeof n === 'object' && n.id && !prev.some(p => p.id === n.id));
                     return [...newItems, ...prev].slice(0, MAX_ITEMS);
                 });
             }
-             if (eventsResult.data) {
+            if (Array.isArray(eventsResult.data)) {
+                const eventsList = eventsResult.data;
                 setEvents(prev => {
-                    const newItems = eventsResult.data!.filter(n => !prev.some(p => p.id === n.id));
+                    const newItems = eventsList.filter(n => n && typeof n === 'object' && n.id && !prev.some(p => p.id === n.id));
                     return [...newItems, ...prev].slice(0, MAX_ITEMS);
                 });
             }

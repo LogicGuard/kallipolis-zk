@@ -1,0 +1,26 @@
+groups:
+  - name: kallipolis_alerts
+    rules:
+      - alert: HighTransactionLatency
+        expr: histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Gateway 99th percentile transaction processing latency exceeds 50ms"
+
+      - alert: HighMempoolRiskScore
+        expr: avg(kallipolis_mempool_risk_score) > 85
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Elevated risk score detected across mempool transaction stream"
+
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"

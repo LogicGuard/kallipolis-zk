@@ -191,17 +191,17 @@ const BridgeSecurityView: React.FC = () => {
                                             <circle cx="64" cy="64" r="60" fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="4" />
                                             <motion.circle 
                                                 cx="64" cy="64" r="60" fill="none" 
-                                                stroke={result.securityScore.score > 80 ? '#10b981' : '#f59e0b'} 
+                                                stroke={(result.securityScore?.score ?? 0) > 80 ? '#10b981' : '#f59e0b'} 
                                                 strokeWidth="4" 
                                                 strokeDasharray="377"
                                                 initial={{ strokeDashoffset: 377 }}
-                                                animate={{ strokeDashoffset: 377 - (377 * result.securityScore.score) / 100 }}
+                                                animate={{ strokeDashoffset: 377 - (377 * (result.securityScore?.score ?? 0)) / 100 }}
                                                 transition={{ duration: 1.5, ease: "easeOut" }}
                                             />
                                         </svg>
-                                        <span className="text-4xl font-black font-mono text-white">{result.securityScore.score}</span>
+                                        <span className="text-4xl font-black font-mono text-white">{result.securityScore?.score ?? 0}</span>
                                     </div>
-                                    <p className="text-xs font-mono mt-6 text-gray-400">{result.securityScore.summary}</p>
+                                    <p className="text-xs font-mono mt-6 text-gray-400">{result.securityScore?.summary || 'N/A'}</p>
                                 </Card>
 
                                 <div className="space-y-4">
@@ -210,16 +210,16 @@ const BridgeSecurityView: React.FC = () => {
                                             <ShieldCheckIcon className="w-5 h-5 text-green-500" />
                                             <h3 className="text-xs font-bold text-white uppercase tracking-wider">Liquidity Status</h3>
                                         </div>
-                                        <div className="text-xl font-mono text-green-400 font-black mb-1">{result.liquidityRisk.risk.toUpperCase()}_RISK</div>
-                                        <p className="text-[10px] text-gray-500 font-mono leading-tight">{result.liquidityRisk.summary}</p>
+                                        <div className="text-xl font-mono text-green-400 font-black mb-1">{(result.liquidityRisk?.risk || 'Low').toUpperCase()}_RISK</div>
+                                        <p className="text-[10px] text-gray-500 font-mono leading-tight">{result.liquidityRisk?.summary || 'N/A'}</p>
                                     </Card>
                                     <Card className="p-5 border-yellow-500/20 bg-yellow-500/5">
                                         <div className="flex items-center gap-3 mb-3">
                                             <ActivityIcon className="w-5 h-5 text-yellow-500" />
                                             <h3 className="text-xs font-bold text-white uppercase tracking-wider">Withdrawal Vector</h3>
                                         </div>
-                                        <div className="text-xl font-mono text-yellow-400 font-black mb-1">{result.withdrawalSafety.risk.toUpperCase()}_RISK</div>
-                                        <p className="text-[10px] text-gray-500 font-mono leading-tight">{result.withdrawalSafety.summary}</p>
+                                        <div className="text-xl font-mono text-yellow-400 font-black mb-1">{(result.withdrawalSafety?.risk || 'Safe').toUpperCase()}_RISK</div>
+                                        <p className="text-[10px] text-gray-500 font-mono leading-tight">{result.withdrawalSafety?.summary || 'N/A'}</p>
                                     </Card>
                                 </div>
                             </motion.div>

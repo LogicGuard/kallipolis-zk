@@ -62,26 +62,26 @@ const StakingAnalysisView: React.FC = () => {
 
             {isLoading && <div className="mt-6"><ViewLoader /></div>}
 
-            {result && (
+             {result && (
                 <div className="mt-6 space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Card className="p-6">
                              <h3 className="font-semibold text-lg mb-2">Validator Performance</h3>
-                             <p className="text-4xl font-bold">{result.validatorPerformance.score}/100</p>
-                             <p className="font-semibold">{result.validatorPerformance.rating}</p>
-                             <p className="text-sm text-brand-text-light mt-2">{result.validatorPerformance.details}</p>
+                             <p className="text-4xl font-bold">{result.validatorPerformance?.score ?? 0}/100</p>
+                             <p className="font-semibold">{result.validatorPerformance?.rating || 'N/A'}</p>
+                             <p className="text-sm text-brand-text-light mt-2">{result.validatorPerformance?.details || 'No details available.'}</p>
                         </Card>
                          <Card className="p-6">
                              <h3 className="font-semibold text-lg mb-2">Slashing Risk</h3>
-                             <p className="text-4xl font-bold">{result.slashingRisk.level}</p>
-                             <p className="text-sm text-brand-text-light mt-2">{result.slashingRisk.details}</p>
+                             <p className="text-4xl font-bold">{result.slashingRisk?.level || 'Unknown'}</p>
+                             <p className="text-sm text-brand-text-light mt-2">{result.slashingRisk?.details || 'No details available.'}</p>
                         </Card>
                     </div>
                     <Card className="p-6">
                         <h3 className="font-semibold text-lg mb-2">Reward Optimization</h3>
-                        <p className="font-bold text-brand-accent">{result.rewardOptimization.potential} Potential</p>
+                        <p className="font-bold text-brand-accent">{result.rewardOptimization?.potential || 'Moderate'} Potential</p>
                         <ul className="list-disc list-inside mt-2 space-y-1 text-sm text-brand-text-light">
-                            {result.rewardOptimization.suggestions.map((s, i) => <li key={i}>{s}</li>)}
+                            {(result.rewardOptimization?.suggestions || []).map((s, i) => <li key={i}>{s}</li>)}
                         </ul>
                     </Card>
                 </div>

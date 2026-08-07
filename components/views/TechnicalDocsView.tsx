@@ -636,6 +636,65 @@ impl<F: halo2_proofs::arithmetic::Field> Circuit<F> for FATFTravelRuleCircuit {
 }
 \`\`\`
         `
+    },
+    {
+        id: 'strategic-expansion-blueprint',
+        title: '6-Pillar Strategic Blueprint',
+        icon: TrendingUpIcon,
+        sphere: 'Infrastructure',
+        readTime: '15m',
+        version: 'v5.0.0-PROD',
+        status: 'Verified',
+        author: 'Chief_Architect',
+        schematicId: '0xPG-505',
+        content: `
+# Kallipolis ZK - Enterprise Strategic Roadmap & Architectural Expansion Blueprint
+
+To establish Kallipolis ZK as the definitive industrial security standard for the Polygon AggLayer, this blueprint defines 6 core engineering pillars spanning decentralized infrastructure, advanced ZK proofs, high-frequency performance, AI firewalls, autonomous agents, and developer tooling.
+
+---
+
+## 🧠 1. Architecture & Infrastructure
+- **Fully Decentralized Peer-to-Peer Network:** Replaces the central TypeScript Orchestrator with a Libp2p/GossipSub actor network to eliminate single points of failure and central coordinator risks.
+- **Censorship-Resistant Byzantine Fault Tolerance (BFT):** Implements Tendermint / HotStuff consensus across firewall nodes to guarantee deterministic rule propagation under malicious network conditions.
+- **Full Self-Healing via Kubernetes Operators:** Deploys custom K8s Custom Resource Definitions (CRDs) for automated pod recovery, health checks, and continuous Chaos Engineering fault-injection.
+- **Decentralized Audit Storage:** Anchors execution traces, state roots, and security telemetry onto IPFS and Arweave with cryptographic availability guarantees.
+
+---
+
+## 🔬 2. Zero-Knowledge (ZK) & Advanced Cryptography
+- **Proof Aggregation & Halo2 Recursion:** Implements Halo2 recursive proof batching to aggregate thousands of transaction proofs into a single succint proof, slashing Polygon L1 verification gas fees by over 95%.
+- **Aligned Layer Integration:** Integrates with Aligned Layer for decentralized, high-throughput ZK verification services.
+- **Post-Quantum Cryptography (PQC):** Upgrades signature schemes and key exchanges to NIST PQC standards (Dilithium, Kyber, Falcon) to ensure decade-long resistance against quantum decrypt attacks.
+- **Dynamic AI-Driven ZK Circuits:** Leverages ML models to automatically generate and compile optimized ZK circuit constraints for newly discovered zero-day EVM vulnerability vectors.
+
+---
+
+## 🚀 3. Performance, Scalability & Efficiency
+- **Hardware Acceleration (GPU/FPGA):** Cuda PTX and Metal acceleration kernels for parallel MSM (Multi-Scalar Multiplication) and NTT (Number Theoretic Transform) computations during ZK proof generation.
+- **System-Level Native Compilation:** Clang target-native compilation for Rust microservices and manual arena memory allocation in Go to eliminate Garbage Collector latency spikes (jitter).
+- **Predictive Kubernetes Auto-scaling:** Custom K8s Horizontal Pod Autoscaler (HPA) metrics linked directly to mempool transaction queue depth.
+
+---
+
+## 🛡️ 4. Security & Resilience
+- **Adaptive AI Firewall:** Real-time stream-processing ML classifiers that evaluate mempool transaction payloads and automatically generate active firewall block rules without human intervention.
+- **Zero-Trust Microservice Mesh:** Enforces strict Mutual TLS (mTLS) with SPIFFE/SPIRE identity attestation across all Rust, Go, Zig, and Node microservice boundaries.
+- **Proactive Threat Hunting & Smart Honeypots:** Deploys interactive honeypot smart contracts across AggLayer chains to attract, capture, and fingerprint emerging exploit techniques.
+
+---
+
+## 🤖 5. AI & Autonomous Automation
+- **Autonomous Swarm AI Agents:** Distributed network of specialized agents (MEV Monitor, Reentrancy Auditor, Slashing Safeguard, Compliance Oracle) working in concert via Swarm Consensus.
+- **Immutable On-Chain AI Audit Trail:** Cryptographically anchors AI decision trees, confidence scores, and raw model output hashes on Polygon AggLayer.
+
+---
+
+## 🧩 6. Developer Experience & Community
+- **Security Plugin SDK & Marketplace:** Open-source TypeScript / Rust SDK allowing external security teams to publish custom firewall filters and detection modules.
+- **Hardhat & Foundry Tooling Plugins:** Native CLI and developer framework bindings enabling automated pre-deployment firewall simulations in CI/CD pipelines.
+- **DAO Governance & Immunefi Bug Bounty:** Decentralized protocol treasury management and active bug bounty rewards on Immunefi.
+`
     }
 ];
 

@@ -1,24 +1,29 @@
 ## Description
-Describe your changes in detail.
+Describe your changes in detail according to Conventional Commits specification.
 
 ## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Breaking change
-- [ ] Documentation update
-- [ ] **ZK Circuit Modification** (Requires formal verification)
+- [ ] `feat`: New feature or API endpoint
+- [ ] `fix`: Bug fix
+- [ ] `perf`: Performance optimization
+- [ ] `docs`: Documentation update
+- [ ] `test`: Unit / E2E / Benchmark test addition
+- [ ] `feat!` or `fix!`: **Breaking Change**
+- [ ] **ZK Circuit / Formal Verification Modification**
+
+## Related Issues
+Fixes # (issue)
 
 ## How Has This Been Tested?
-Please describe the tests that you ran to verify your changes.
-- [ ] Automated Tests (Vitest/Cargo)
-- [ ] Formal Verification (OCaml/Z3)
-- [ ] Manual Verification
-- [ ] Benchmarks
+- [ ] Vitest Suite (`npm test`)
+- [ ] Web3 E2E Tests (`npm run test:e2e`)
+- [ ] Formal Verification & Circuit Verification
+- [ ] Performance Benchmarks (`npm run test:bench`)
+- [ ] Security Audits (`cargo-audit` / `npm-audit`)
 
 ## Checklist:
-- [ ] My code follows the style guidelines of this project
+- [ ] My PR title follows Conventional Commits format (e.g. `feat(gateway): ...`)
+- [ ] My code follows strict TypeScript & Rust coding guidelines
 - [ ] I have performed a self-review of my code
-- [ ] I have commented my code
-- [ ] I have added tests that prove my fix is effective
-- [ ] New and existing unit tests pass locally
-- [ ] Formal verification steps have been run (for ZK changes)
+- [ ] I have added tests that prove my fix or feature works
+- [ ] All CI checks pass locally (`npm run lint` & `npm test`)
+
