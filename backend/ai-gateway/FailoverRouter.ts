@@ -22,7 +22,7 @@ export class FailoverRouter {
         for (let i = 0; i < normalizedProviders.length; i++) {
             const provider = normalizedProviders[(this.currentIndex + i) % normalizedProviders.length];
             try {
-                console.log(`[FailoverRouter] Attempting generation with provider: ${provider}`);
+                console.log('[FailoverRouter] Attempting generation with provider: %s', provider);
                 
                 if (['phi-3', 'llama-3', 'mistral'].includes(provider.toLowerCase())) {
                     const text = await this.slmPool.generate(prompt, provider, apiKeys?.OLLAMA_URL);
@@ -32,7 +32,7 @@ export class FailoverRouter {
                     return { text: res.text, model: provider, raw: res.response };
                 }
             } catch (error: any) {
-                console.error(`[FailoverRouter] Provider ${provider} failed:`, error.message);
+                console.error('[FailoverRouter] Provider %s failed: %s', provider, String(error?.message || error));
                 errors.push(`${provider}: ${error.message}`);
                 continue; // Immediately try next provider
             }

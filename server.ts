@@ -5,6 +5,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
+import { globalApiLimiter, strictApiLimiter } from "./middleware/rateLimiter";
 import { PolyglotEngineManager } from "./services/polyglot/polyglot.service";
 import { bridgeSentinel } from "./services/bridge.sentinel.service";
 import { ModelConfigRouter } from "./backend/ai-gateway/UserConfigApi";
@@ -118,6 +119,20 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
   app.use(express.json());
+
+  // Apply rate limiting across all API endpoints via middleware
+  app.use("/api/", globalApiLimiter);
+
+  // Apply strict rate limiting to compute-heavy security endpoints
+  app.use("/api/v1/audit/analyze", strictApiLimiter);
+  app.use("/api/v1/firewall/simulate", strictApiLimiter);
+  app.use("/api/v1/bridge/inspect", strictApiLimiter);
+  app.use("/api/v1/bridge/verify", strictApiLimiter);
+  app.use("/api/v1/ai/swarm-analyze", strictApiLimiter);
+  app.use("/api/v1/ai/consensus", strictApiLimiter);
+  app.use("/api/v1/ai/generate", strictApiLimiter);
+  app.use("/api/v1/polyglot/", strictApiLimiter);
+  app.use("/api/v1/remediation/pause-contract", strictApiLimiter);
 
   // Swagger API Documentation UI
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
