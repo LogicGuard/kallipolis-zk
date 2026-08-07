@@ -494,14 +494,14 @@ const SmartContractAuditorView: React.FC = () => {
                                         <h2 className="text-sm font-black text-white uppercase tracking-widest">Security_Vulnerabilities</h2>
                                     </div>
                                     
-                                    {result.vulnerabilities.length === 0 ? (
+                                    {(!result.vulnerabilities || result.vulnerabilities.length === 0) ? (
                                         <div className="p-6 bg-green-500/5 border border-green-500/20 rounded-sm text-center">
                                             <ShieldCheckIcon className="w-8 h-8 text-green-500 mx-auto mb-2" />
                                             <p className="text-xs font-mono text-green-400 uppercase">No Immediate Vulnerabilities Detected</p>
                                         </div>
                                     ) : (
                                         <div className="grid grid-cols-1 gap-3">
-                                            {result.vulnerabilities.map((v, i) => (
+                                            {(result.vulnerabilities || []).map((v, i) => (
                                                 <Card key={i} className={`p-4 border group hover:scale-[1.01] transition-all ${getSeverityStyles(v.severity)}`}>
                                                     <div className="flex justify-between items-start mb-2">
                                                         <h3 className="text-xs font-black uppercase tracking-tight">{v.title}</h3>
@@ -524,7 +524,7 @@ const SmartContractAuditorView: React.FC = () => {
                                     </div>
                                     
                                     <div className="grid grid-cols-1 gap-3">
-                                        {result.gasOptimizations.map((g, i) => (
+                                        {(result.gasOptimizations || []).map((g, i) => (
                                             <Card key={i} className="p-4 bg-white/[0.02] border-white/5 group hover:border-yellow-500/30 transition-all">
                                                 <div className="flex justify-between items-center mb-2">
                                                     <h3 className="text-[11px] font-bold text-gray-200 uppercase">{g.suggestion}</h3>

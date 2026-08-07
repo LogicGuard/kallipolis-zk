@@ -39,14 +39,20 @@ export class LLMPool {
                 throw new Error("Anthropic SDK not initialized. Please install @anthropic-ai/sdk");
             default:
                 // Try gemini as default
-                return this.geminiGenerate(prompt, "gemini-3.5-flash", options, apiKeys?.GEMINI);
+                return this.geminiGenerate(prompt, "gemini-2.0-flash", options, apiKeys?.GEMINI);
         }
     }
     
     private async geminiGenerate(prompt: string, modelId: string, options?: any, customKey?: string): Promise<{text: string, response: any}> {
-        const ai = customKey ? new GoogleGenAI({ apiKey: customKey }) : this.gemini;
+        const apiKey = customKey || process.env.GEMINI_API_KEY || process.env.API_KEY;
+        if (!apiKey) {
+            throw new Error("GEMINI_API_KEY is missing. Please set GEMINI_API_KEY in environment or AI Gateway configuration.");
+        }
+        const ai = new GoogleGenAI({ apiKey });
+        // Standardize valid Gemini model name
+        const normalizedModel = (modelId === "gemini-3.5-flash" || modelId === "gemini-2.5-flash" || !modelId || modelId === "gemini") ? "gemini-2.0-flash" : modelId;
         const response = await ai.models.generateContent({ 
-            model: modelId, 
+            model: normalizedModel, 
             contents: prompt,
             config: options 
         });

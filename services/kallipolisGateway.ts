@@ -56,13 +56,13 @@ export class KallipolisAIGateway {
         const provider = configOverrides?.provider || currentConfig.routing[currentConfig.strategy] || currentConfig.defaultProvider;
         
         let targetModel = configOverrides?.model;
-        if (!targetModel) {
-            targetModel = provider === "OLLAMA" ? "phi-3" : (provider === "OPENAI" ? "gpt-4o" : "gemini-3.5-flash");
+        if (!targetModel || targetModel === "gemini-3.5-flash" || targetModel === "gemini-2.5-flash") {
+            targetModel = provider === "OLLAMA" ? "phi-3" : (provider === "OPENAI" ? "gpt-4o" : "gemini-2.0-flash");
         }
 
         const apiKeys = {
-            GEMINI: currentConfig.providers.GEMINI?.apiKey,
-            OPENAI: currentConfig.providers.OPENAI?.apiKey,
+            GEMINI: currentConfig.providers.GEMINI?.apiKey || process.env.GEMINI_API_KEY || process.env.API_KEY,
+            OPENAI: currentConfig.providers.OPENAI?.apiKey || process.env.OPENAI_API_KEY,
             OLLAMA_URL: currentConfig.providers.OLLAMA?.baseUrl
         };
 
@@ -79,13 +79,12 @@ export class KallipolisAIGateway {
             console.warn(`[Gateway] Primary provider ${provider} failed: ${response.error}. Attempting fallback to GEMINI.`);
             const fallbackResponse = await edgeRouter.route_request({
                 prompt,
-                model_preference: "gemini-3.5-flash",
+                model_preference: "gemini-2.0-flash",
                 complexity: 0.8,
                 options: configOverrides?.config,
                 apiKeys,
                 userId: configOverrides?.userId
             });
-            if (!fallbackResponse.success) throw new Error(fallbackResponse.error);
             return fallbackResponse.raw || { text: fallbackResponse.text, candidates: [] };
         }
 

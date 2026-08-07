@@ -38,10 +38,55 @@
 
 ---
 
+## 🚀 Quick Start
+
+Get Kallipolis ZK up and running in minutes.
+
+### 1. Prerequisites
+Ensure you have the following installed:
+- [Docker](https://docker.com) & [Docker Compose](https://docs.docker.com/compose/)
+- [Node.js](https://nodejs.org/) (v18+) & [Bun](https://bun.sh/)
+
+### 2. Clone & Setup
+```bash
+git clone https://github.com/LogicGuard/kallipolis-zk.git
+cd kallipolis-zk
+cp .env.example .env
+# Configure your .env file with necessary keys
+```
+
+### 3. Launch Local Stack
+```bash
+# Spin up infrastructure and microservices
+docker-compose up -d
+```
+
+### 4. Verify
+Check the status of services:
+```bash
+docker-compose ps
+```
+
+---
+
 ## 📑 Table of Contents
+- [Quick Start](#-quick-start)
+- [Manifesto](#-manifesto)
+- [Documentation Hub](#-documentation-hub)
 - [At a Glance](#-at-a-glance)
 - [Architectural Overview](#-architectural-overview)
 - [Why Kallipolis?](#-why-kallipolis)
+- [Roadmap](#-roadmap)
+- [Security](#-security)
+- [License](#-license)
+
+---
+
+## 📖 Manifesto
+Read our [Project Manifesto](/MANIFESTO.md) to understand the core mission and philosophy behind Kallipolis ZK.
+
+## 📚 Documentation Hub
+Explore our comprehensive [Wiki](/wiki/index.md) for deep-dive technical documentation, architectural details, and security audit reports.
 - [Key Use Cases](#-key-use-cases)
 - [Technical Innovations](#-technical-innovations)
 - [Repository Topography](#-repository-topography)
@@ -205,15 +250,31 @@ By utilizing native languages for performance-critical components, we secure exe
 
 ```text
 kallipolis-enterprise/
-├── services/                  # Orchestration Layer (Optimized Firewall, Z3 Symbolic solver)
+├── actor-system/              # Actor-based async orchestration
 ├── circuits/                  # Cryptographic ZK Circuits
-│   ├── halo2/                 # Plonkish circuits with MockProver suite
-│   └── circom/                # R1CS constraints (Mempool, Merkle, Solvency)
-├── prover/                    # Rust Proof Generation & Verifying Engine
-├── components/                # Advanced Dashboard Views
-├── __tests__/                 # Verification and Benchmarks
-└── package.json               # Platform Manifest
+├── consensus-engine/          # Consensus layer implementation
+├── contracts/                 # Smart contract definitions
+├── event-bus/                 # Message-passing infrastructure
+├── gateway/                   # API ingress and routing
+├── kernel/                    # Base microkernel modules
+├── ml-kernel/                 # Machine learning threat detection
+├── prover/                    # Rust ZK Proof Generation Engine
+├── services/                  # Business logic and firewalls
+├── wiki/                      # In-depth technical documentation
+├── examples/                  # Code-based integration patterns
+└── ...                        # Configs and CI/CD pipelines
 ```
+
+## 🛠️ Project Components
+
+- **[Gateway](/gateway)**: Entry point for high-throughput RPC ingress.
+- **[Actor System](/actor-system)**: Fault-tolerant task orchestration.
+- **[Consensus Engine](/consensus-engine)**: Decentralized state synchronization.
+- **[Prover Engine](/prover)**: Rust-based engine for generating ZK proofs.
+- **[Circuits](/circuits)**: Cryptographic constraints (Halo2/Circom).
+- **[ML Kernel](/ml-kernel)**: AI-driven threat intelligence.
+- **[Wiki](/wiki)**: Deep-dive technical documentation for architecture, deployment, and security audits.
+- **[Examples](/examples)**: Boilerplate code for SDK and API integration.
 
 ### Automated Testing
 ```bash

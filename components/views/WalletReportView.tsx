@@ -171,10 +171,10 @@ const WalletReportView: React.FC = () => {
                                         <ShieldCheckIcon className="w-4 h-4 text-green-500" />
                                         Security Strengths
                                     </h3>
-                                    <span className="text-[10px] font-mono text-gray-600">COUNT: {result.positivePoints.length}</span>
+                                    <span className="text-[10px] font-mono text-gray-600">COUNT: {(result.positivePoints || []).length}</span>
                                 </div>
                                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {result.positivePoints.map((point, i) => (
+                                    {(result.positivePoints || []).map((point, i) => (
                                         <div key={i} className="p-3 bg-green-500/5 border border-green-500/10 rounded-sm">
                                             <div className="flex items-center gap-2 mb-1">
                                                 <div className="w-1.5 h-1.5 bg-green-500 rounded-sm"></div>
@@ -192,10 +192,10 @@ const WalletReportView: React.FC = () => {
                                         <ThreatIcon className="w-4 h-4 text-red-500" />
                                         Detected Vulnerabilities
                                     </h3>
-                                    <span className="text-[10px] font-mono text-gray-600">COUNT: {result.risks.length}</span>
+                                    <span className="text-[10px] font-mono text-gray-600">COUNT: {(result.risks || []).length}</span>
                                 </div>
                                 <div className="p-4 space-y-3">
-                                    {result.risks.map((risk, i) => (
+                                    {(result.risks || []).map((risk, i) => (
                                         <div key={i} className="flex items-start gap-3 p-3 bg-white/5 border border-white/5 hover:border-red-500/30 transition-colors group">
                                             <div className={`mt-1 px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-sm border ${risk.severity === 'High' ? 'bg-red-500/20 text-red-400 border-red-500/30' : risk.severity === 'Medium' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' : 'bg-blue-500/20 text-blue-400 border-blue-500/30'}`}>
                                                 {risk.severity}

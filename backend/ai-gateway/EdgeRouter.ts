@@ -84,8 +84,9 @@ export class EdgeRouter {
             let preferredProviders = [strategy.model];
             
             if (strategy.type === 'Simple') {
-                preferredProviders.push('gemini-3.5-flash'); // Fallback from local to cloud
+                preferredProviders.push('gemini-2.0-flash'); // Fallback from local to cloud
             } else {
+                preferredProviders.push('gemini-2.0-flash');
                 preferredProviders.push('gpt-4o'); // Fallback from gemini to openai (or vice versa)
             }
             // Ensure unique providers in list
@@ -128,7 +129,7 @@ export class EdgeRouter {
         // Edge-level AI classification using heuristics or tiny model
         // For simplicity, we use heuristic based on complexity score or requested model
         
-        const requestedModel = req.model_preference || 'gemini-3.5-flash';
+        const requestedModel = (req.model_preference === 'gemini-3.5-flash' || req.model_preference === 'gemini-2.5-flash' || !req.model_preference) ? 'gemini-2.0-flash' : req.model_preference;
         const isSLMRequested = ['phi-3', 'llama-3', 'llama3', 'mistral'].includes(requestedModel.toLowerCase());
         
         if (isSLMRequested || (req.complexity !== undefined && req.complexity < 0.3)) {

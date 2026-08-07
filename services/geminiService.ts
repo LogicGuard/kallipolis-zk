@@ -215,7 +215,7 @@ export async function analyzeWithGemini(prompt: string, isBackground: boolean = 
         if (cached) return { data: cached, error: null };
 
         const requestPromise = (async () => {
-            const model = 'gemini-3.5-flash';
+            const model = 'gemini-2.0-flash';
             const response = await generateContentWithRetry(
                 model, 
                 prompt, 
@@ -254,7 +254,7 @@ async function analyzeWithStructuredSchema<T>(prompt: string, schema: any, cache
         if (cached) return { data: cached, error: null };
 
         const requestPromise = (async () => {
-            const model = 'gemini-3.5-flash';
+            const model = 'gemini-2.0-flash';
             const response = await generateContentWithRetry(
                 model, 
                 prompt, 
@@ -287,7 +287,7 @@ async function analyzeWithStructuredSchema<T>(prompt: string, schema: any, cache
 export const connectToLiveAssistant = (callbacks: any) => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   return ai.live.connect({
-    model: 'gemini-3.1-flash-live-preview',
+    model: 'gemini-2.0-flash-exp',
     callbacks,
     config: {
       responseModalities: [Modality.AUDIO],
@@ -336,7 +336,7 @@ export async function getIntelligenceBriefing(): Promise<{ data: GenerateContent
     if (isGlobalCoolingDown) return { data: null, error: "SYSTEM_CONGESTION" };
     try {
         const response = await generateContentWithRetry(
-            "gemini-3.5-flash",
+            "gemini-2.0-flash",
             "Polygon network security status briefing. Last 24 hours.",
             { tools: [{ googleSearch: {} }] },
             0,
