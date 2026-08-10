@@ -59,7 +59,7 @@
 
 ---
 
-## 📌 Section 2: Executive Summary (TL;DR) – For CTOs
+## 📌 Executive Summary (TL;DR) – For CTOs
 
 ### 🔴 The Problem
 As cross-chain liquidity and transaction volume scale across the Polygon AggLayer, high-frequency EVM rollups face catastrophic threats: toxic MEV sandwich attacks, malicious flash-loan reentrancy trajectories, unverified bridge deposits, and non-compliant state proofs that drain protocol treasuries before on-chain settlement occurs.
@@ -74,7 +74,7 @@ Kallipolis ZK establishes an ultra-low-latency defensive perimeter operating at 
 
 ---
 
-## 📌 Section 3: High-Level Architecture (C4 Model)
+## 📌 High-Level Architecture (C4 Model)
 
 ### 3.1. Context Diagram (C4 Level 1)
 ```mermaid
@@ -186,7 +186,7 @@ sequenceDiagram
 
 ---
 
-## 📌 Section 4: Service Level Objectives & Metrics (SLOs/SLIs)
+## 📌 Service Level Objectives & Metrics (SLOs/SLIs)
 
 Datadog/Prometheus production performance benchmarks verified under automated stress tests:
 
@@ -202,7 +202,7 @@ Datadog/Prometheus production performance benchmarks verified under automated st
 
 ---
 
-## 📌 Section 5: Core Innovations & Technical Differentiators
+## 📌 Core Innovations & Technical Differentiators
 
 ### 5.1. Polyglot Microkernel Architecture (Zero-Cost FFI)
 Kallipolis ZK eliminates runtime language bottlenecks by pairing specialized microkernels via low-level C ABI and FFI bindings:
@@ -227,7 +227,7 @@ The Halo2 Plonkish prover engine features custom CUDA PTX and Metal shaders for 
 
 ---
 
-## 📌 Section 6: Repository Topography & File Manifest
+## 📌 Repository Topography & File Manifest
 
 ```text
 📦 project-root
@@ -261,7 +261,7 @@ The Halo2 Plonkish prover engine features custom CUDA PTX and Metal shaders for 
 
 ---
 
-## 📌 Section 7: Developer Experience (DX) – Launch in 60s
+## 📌 Developer Experience (DX) – Launch in 60s
 
 ### 7.1. Prerequisites
 Ensure your local development environment meets the following compiler standards:
@@ -291,7 +291,7 @@ make status
 
 ---
 
-## 📌 Section 8: Enterprise Production & GitOps Deployment
+## 📌 Enterprise Production & GitOps Deployment
 
 ### 8.1. GitOps Workflow with ArgoCD
 Production deployments follow a declarative GitOps architecture. Changes committed to `main` undergo automated containerization, image signing via Cosign, and continuous deployment through ArgoCD.
@@ -326,7 +326,7 @@ spec:
 
 ---
 
-## 📌 Section 9: Threat Modeling & Security (STRIDE Matrix)
+## 📌 Threat Modeling & Security (STRIDE Matrix)
 
 | Threat Domain | STRIDE Category | Vector Description | Kallipolis Mitigation Mechanism | Status |
 | :--- | :--- | :--- | :--- | :--- |
@@ -339,7 +339,7 @@ spec:
 
 ---
 
-## 📌 Section 10: Observability & Golden Signals
+## 📌 Observability & Golden Signals
 
 Kallipolis ZK exposes deep production telemetry aligned with the 4 Golden Signals:
 
@@ -366,7 +366,7 @@ Every inbound RPC call receives a W3C `traceparent` context header that spans fr
 
 ---
 
-## 📌 Section 11: Strategic Expansion Roadmap
+## 📌 Strategic Expansion Roadmap
 
 ```
   Q3 2026 (CURRENT)              Q4 2026                       Q1 2027+
@@ -382,7 +382,7 @@ See [ROADMAP.md](ROADMAP.md) for complete strategic milestones.
 
 ---
 
-## 📌 Section 12: Frequently Asked Questions (FAQ)
+## 📌 Frequently Asked Questions (FAQ)
 
 <details>
 <summary><b>1. Does Kallipolis ZK replace existing Polygon node sequencers?</b></summary>
@@ -404,7 +404,7 @@ Through zero-allocation calldata parsing in Zig, memory-mapped C++ EVM trace com
 
 ---
 
-## 📌 Section 13: Governance & Community
+## 📌 Governance & Community
 
 * **Pull Request Policy:** All PRs must pass `tsc --noEmit`, full `npm run test` suites, and maintain `100%` circuit constraint soundness.
 * **Developer Certificate of Origin (DCO):** All commits must be signed off with `git commit -s`.
@@ -416,7 +416,7 @@ Through zero-allocation calldata parsing in Zig, memory-mapped C++ EVM trace com
 
 ---
 
-## 📌 Section 14: Licensing & Academic Citations
+## 📌 Licensing & Academic Citations
 
 ### License
 Kallipolis ZK Enterprise is released under the permissive [MIT License](LICENSE).
